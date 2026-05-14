@@ -33,34 +33,34 @@ struct options {
     // 默认1
     algo algo { algo::SHIFT };
 
-    // 基础时间(ms单位)，不能超过当前系统时间
-    uint64_t BaseTime { 1582136402000 };
+    // 基础时间(ms单位), 不能超过当前系统时间
+    uint64_t base_time { 1582136402000 };
 
-    // 机器码，必须由外部设定，
+    // 机器码, 必须由外部设定
     // 最大值 2^worker_id_bit_len-1
     uint32_t worker_id { 0 };
 
-    // 机器码位长，默认值6
+    // 机器码位长, 默认值6
     // 要求：序列数位长+机器码位长不超过22
     // 取值范围 [1, 15]
     uint8_t worker_id_bit_len { 6 };
 
-    // 序列数位长，默认值6
+    // 序列数位长, 默认值6
     // 要求：序列数位长+机器码位长不超过22
     // 取值范围 [3, 21]
     uint8_t seq_bit_len { 6 };
 
     // 最大序列数(含)
     // 设置范围 [min_seq_num, 2^seq_bit_len-1]
-    // 默认值0，表示最大序列数取最大值(2^seq_bit_len-1])
+    // 默认值0, 表示最大序列数取最大值(2^seq_bit_len-1])
     uint32_t max_seq_num { 0 };
 
     // 最小序列数(含)
-    // 默认值5，取值范围 [5, max_seq_num]
-    // 每毫秒的前5个序列数对应编号0-4是保留位，其中1-4是时间回拨相应预留位，0是手工新值预留位
+    // 默认值5, 取值范围 [5, max_seq_num]
+    // 每毫秒的前5个序列数对应编号0-4是保留位, 0是手工新值预留位, 其中1-4是时间回拨相应预留位
     uint32_t min_seq_num { 5 };
 
-    // 最大漂移次数(含)，默认2000，推荐范围 500-20000(与计算能力有关)
+    // 最大漂移次数(含), 默认2000, 推荐范围 500-20000(与计算能力有关)
     uint32_t top_over_cost_cnt { 2000 };
 };
 
@@ -73,7 +73,7 @@ inline static int64_t get_curr_time() {
 
 class worker {
 public:
-    int64_t get_curr_time_tick() { return get_curr_time() - (int64_t)opts_.BaseTime; }
+    int64_t get_curr_time_tick() { return get_curr_time() - (int64_t)opts_.base_time; }
 
     int64_t get_next_time_tick() {
         int64_t time_tick = get_curr_time_tick();
@@ -129,8 +129,8 @@ public:
             if (turn_back_time_tick_ < 1) {
                 turn_back_time_tick_ = last_time_tick_ - 1;
                 turn_back_idx_++;
-                // 每毫秒序列数的前 5 位是预留位，0 用于手工新值，1-4 是时间回拨次序
-                // 支持 4 次回拨次序(避免回拨重叠导致 ID 重复)，可无限次回拨(次序循环使用)。
+                // 每毫秒序列数的前 5 位是预留位, 0 用于手工新值, 1-4 是时间回拨次序
+                // 支持 4 次回拨次序(避免回拨重叠导致 ID 重复), 可无限次回拨(次序循环使用)。
                 if (turn_back_idx_ > 4) { turn_back_idx_ = 1; }
             }
 
@@ -197,12 +197,12 @@ public:
     }
 
     void set_options(options options) {
-        // 1.BaseTime
-        if (options.BaseTime == 0) { opts_.BaseTime = 1582136402000; }
-        else if (options.BaseTime < 631123200000 || (int64_t)options.BaseTime > get_curr_time()) {
-            throw std::invalid_argument("BaseTime error.");
+        // 1.base_time
+        if (options.base_time == 0) { opts_.base_time = 1582136402000; }
+        else if (options.base_time < 631123200000 || (int64_t)options.base_time > get_curr_time()) {
+            throw std::invalid_argument("base_time error.");
         }
-        else { opts_.BaseTime = options.BaseTime; }
+        else { opts_.base_time = options.base_time; }
 
         // 2.worker_id_bit_len
         if (options.worker_id_bit_len <= 0) {
@@ -293,34 +293,29 @@ public:
     generator(const generator&) = delete;
     generator& operator=(const generator&) = delete;
 
-    static void CreateInstance(uint32_t worker_id) {
+    static void create_instance(uint32_t worker_id) {
         options options;
         options.worker_id = worker_id;
-        CreateInstance(options);
+        create_instance(options);
     }
 
-    static void CreateInstance(options options) {
+    static void create_instance(options options) {
         static std::once_flag flag;
         std::call_once(flag, [options]() { createInstance(options); });
     }
 
     static int64_t next_id() {
-        assert(inst_ && "Please call CreateInstance first to create an instance");
+        assert(inst_ && "Please call create_instance first to create an instance");
         return inst_->next_id();
     }
 
 private:
     generator() {}
 
-    // 使用std::once_flag和std::call_once保证只初始化一次
     static void createInstance(options options) {
         static generator obj;
-        // 理论上保证了这个函数只会被调用一次，就算是多线程并发调用也不例外
-        assert(nullptr == inst_ && "Theoretically, it is guaranteed that this function will only be called once, even if it is called concurrently by multiple threads.");
         inst_ = &obj;
         inst_->worker_.set_options(options);
-        // 在多个线程调用 CreateInstance 时候，看是否出现打印多次
-        // printf("调用 %s \n", __FUNCTION__);
     }
 
 private:
