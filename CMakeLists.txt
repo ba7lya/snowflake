@@ -2,7 +2,7 @@
 cmake_minimum_required(VERSION 3.21)
 
 # --- project ---
-project(ba7lya.xxxx LANGUAGES CXX)
+project(ba7lya.snowflake LANGUAGES CXX)
 
 # --- build options ---
 option(${PROJECT_NAME}_BUILD_BENCHMARK "Build benchmarks"    OFF)
@@ -32,43 +32,12 @@ add_subdirectory(thirdparty)
 
 # --- target ---
 add_library(${PROJECT_NAME})
-add_library(ba7lya::xxxx ALIAS ${PROJECT_NAME})
-
-# --- include directory ---
-target_include_directories(
-    ${PROJECT_NAME}
-    PUBLIC
-    ${PROJECT_SOURCE_DIR}/include/
-)
-
-# --- source files ---
-target_sources(
-    ${PROJECT_NAME}
-    PRIVATE
-    src/app.cxx
-)
-
-# --- linakge ---
-target_link_libraries(
-    ${PROJECT_NAME}
-    PRIVATE
-    spdlog::spdlog
-)
-
-# --- compile features ---
-target_compile_features(
-    ${PROJECT_NAME}
-    PRIVATE
-    cxx_std_23
-)
-
-# --- compile options ---
-target_compile_options(
-    ${PROJECT_NAME}
-    PRIVATE
-    "$<$<C_COMPILER_ID:MSVC>:/utf-8>"
-    "$<$<CXX_COMPILER_ID:MSVC>:/utf-8>"
-)
+add_library(ba7lya::snowflake ALIAS ${PROJECT_NAME})
+target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/include/)
+target_sources(${PROJECT_NAME} PRIVATE src/app.cxx)
+target_link_libraries(${PROJECT_NAME}PRIVATE spdlog::spdlog)
+target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_23)
+target_compile_options(${PROJECT_NAME} PRIVATE "$<$<CXX_COMPILER_ID:MSVC>:/utf-8>")
 
 # --- benchmark ---
 if(${PROJECT_NAME}_BUILD_BENCHMARK)
