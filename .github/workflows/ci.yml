@@ -1,0 +1,104 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build-test:
+    name: ${{ matrix.display_name }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            display_name: Windows MSVC x64 (Release)
+            preset: ci-msvc-x64
+            config: Release
+          - os: windows-latest
+            display_name: Windows MSVC x64 (Debug)
+            preset: ci-msvc-x64
+            config: Debug
+          - os: ubuntu-latest
+            display_name: Linux GCC x64 (Release)
+            preset: ci-linux-gcc-x64
+            config: ""
+          - os: ubuntu-latest
+            display_name: Linux Clang x64 (Release)
+            preset: ci-linux-clang-x64
+            config: ""
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+        # thirdparty/vcpkg is NOT checked out: CI uses the runner's preinstalled vcpkg
+        # (the vcpkg.json builtin-baseline pins all port versions regardless).
+
+      - name: Setup MSVC dev environment
+        if: runner.os == 'Windows'
+        uses: ilammy/msvc-dev-cmd@v1
+
+      - name: Setup vcpkg (preinstalled on runner)
+        uses: lukka/run-vcpkg@v11
+        with:
+          vcpkgJsonGlob: vcpkg.json
+          runVcpkgInstall: true
+
+      - name: Configure
+        run: cmake --preset ${{ matrix.preset }}
+
+      - name: Build
+        run: cmake --build --preset ${{ matrix.preset }}${{ matrix.config == 'Debug' && '-debug' || '' }}
+
+      - name: Test
+        run: ctest --preset ${{ matrix.preset }}${{ matrix.config == 'Debug' && '-debug' || '' }} --output-junit test-results.xml
+
+      - name: Smoke examples and benchmark
+        shell: bash
+        run: |
+          if [ "${{ runner.os }}" = "Windows" ]; then
+            bin="build/${{ matrix.preset }}/bin/${{ matrix.config }}"
+            exe=".exe"
+          else
+            bin="build/${{ matrix.preset }}/bin"
+            exe=""
+          fi
+          "./$bin/example_basic$exe"
+          "./$bin/example_options_tuning$exe"
+          "./$bin/example_multi_thread$exe"
+          "./$bin/snowflake_bench$exe" --benchmark_min_time=0.001s --benchmark_repetitions=1
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results-${{ matrix.display_name }}
+          path: test-results.xml
+
+  lint:
+    name: Lint (format + clang-tidy)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install LLVM 22 tools
+        run: |
+          wget -qO- https://apt.llvm.org/llvm-snapshot.gpg.key | sudo tee /etc/apt/trusted.gpg.d/apt.llvm.org.asc > /dev/null
+          codename=$(lsb_release -cs)
+          echo "deb http://apt.llvm.org/${codename}/ llvm-toolchain-${codename}-22 main" \
+            | sudo tee /etc/apt/sources.list.d/llvm22.list > /dev/null
+          sudo apt-get update
+          sudo apt-get install -y clang-format-22 clang-tidy-22
+
+      - name: Check formatting
+        run: |
+          files=$(find include tests examples benchmark \( -name '*.cxx' -o -name '*.hxx' \))
+          clang-format-22 --dry-run --Werror --style=file ${files}
+
+      - name: Configure (library only, no third-party deps)
+        run: cmake --preset lint
+
+      - name: Run clang-tidy
+        run: |
+          clang-tidy-22 --quiet -p build/lint \
+            include/snowflake.hxx tests/*.cxx examples/*.cxx benchmark/*.cxx

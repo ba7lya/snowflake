@@ -1,0 +1,107 @@
+# Static analysis config for the ba7lya.snowflake library.
+#
+# Strategy: start from -* (clang-tidy enables llvmlibc-*/fuchsia-*/llvm-* by
+# default, which is wrong for an application library), turn on every real check
+# group, then exclude ONLY checks whose findings are structural to this project
+# -- each exclusion carries its reason in a comment above it. Findings that
+# could be fixed in code were fixed instead of excluded.
+Checks:
+  - -*
+  # ---- enable every real check group ----
+  - bugprone-*,
+    cert-*,
+    clang-analyzer-*,
+    clang-diagnostic-*,
+    concurrency-*,
+    cppcoreguidelines-*,
+    misc-*,
+    modernize-*,
+    performance-*,
+    readability-*
+  # ---- exclusions with reasons ----
+  # duplicate implementations of cppcoreguidelines/readability checks
+  - -hicpp-*,
+  # bit-width limits (5 reserved seqs, 22-bit cap, 10000 drift cap) and the two
+  # epoch literals are the domain itself; naming them all would obscure intent
+  - -cppcoreguidelines-avoid-magic-numbers,
+    -readability-magic-numbers,
+  # main()s in examples/tests propagate exceptions on purpose
+  - -bugprone-exception-escape,
+  # 90+ false positives here; also fights the deliberately grouped include layout
+  - -misc-include-cleaner,
+  # the LLVM manual itself labels this style "not recommended"
+  - -modernize-use-trailing-return-type,
+  # gtest fixtures must expose protected state to TEST bodies (framework idiom);
+  # the library itself has no non-private data members
+  - -cppcoreguidelines-non-private-member-variables-in-classes,
+    -misc-non-private-member-variables-in-classes,
+  # TEST()/TEST_F()/INSTANTIATE_TEST_SUITE_P() expand into user-uncontrollable
+  # declarations (the generated `..._Test` classes, `test_info_`, gtest's own
+  # uppercase macro identifiers); macro-generated code would fail naming,
+  # internal-linkage and named-parameter checks on every single test file
+  - -misc-use-internal-linkage,
+    -readability-named-parameter,
+  # single-character names are idiomatic for math-ish locals (o = options, id,
+  # gen); the check's own exception list does not cover them and the code reads
+  # better with them than with renamed equivalents sprinkled through tests
+  - -readability-identifier-length
+
+WarningsAsErrors: '*'
+HeaderFilterRegex: '(include|tests)/.*'
+FormatStyle: file
+
+CheckOptions:
+  # ---- snake_case project convention (lower letters + underscore) ----
+  - key: readability-identifier-naming.NamespaceCase
+    value: lower_case
+  - key: readability-identifier-naming.ClassCase
+    value: lower_case
+  - key: readability-identifier-naming.StructCase
+    value: lower_case
+  - key: readability-identifier-naming.UnionCase
+    value: lower_case
+  - key: readability-identifier-naming.EnumCase
+    value: lower_case
+  - key: readability-identifier-naming.ScopedEnumConstantCase
+    value: lower_case
+  - key: readability-identifier-naming.EnumConstantCase
+    value: lower_case
+  - key: readability-identifier-naming.FunctionCase
+    value: lower_case
+  - key: readability-identifier-naming.MethodCase
+    value: lower_case
+  - key: readability-identifier-naming.PrivateMemberCase
+    value: lower_case
+  - key: readability-identifier-naming.PrivateMemberSuffix
+    value: _
+  - key: readability-identifier-naming.ProtectedMemberCase
+    value: lower_case
+  - key: readability-identifier-naming.ProtectedMemberSuffix
+    value: _
+  - key: readability-identifier-naming.PublicMemberCase
+    value: lower_case
+  - key: readability-identifier-naming.GlobalConstantCase
+    value: lower_case
+  - key: readability-identifier-naming.StaticConstantCase
+    value: lower_case
+  - key: readability-identifier-naming.ConstexprVariableCase
+    value: lower_case
+  - key: readability-identifier-naming.MacroDefinitionCase
+    value: UPPER_CASE
+  - key: readability-identifier-naming.GlobalFunctionIgnoreMacros
+    value: true
+  - key: readability-identifier-naming.MacroDefinitionIgnoredRegexp
+    value: "^(TEST|TEST_F|TEST_P|INSTANTIATE_TEST_SUITE_P|GTEST_.*)$"
+  # Google Benchmark names its registered cases BM_*; they are macro-generated
+  # function names and not renamable
+  - key: readability-identifier-naming.FunctionIgnoredRegexp
+    value: "^BM_.*$"
+  # ---- per-check tuning ----
+  # count only the function's own control flow, not the EXPECT_*/ASSERT_* macro
+  # expansions inside test bodies
+  - key: readability-function-cognitive-complexity.IgnoreMacros
+    value: true
+  # the options struct is eight same-typed-ish scalars by design, callers use
+  # designated initializers so accidental swapping is not a real risk
+  - key: bugprone-easily-swappable-parameters.Threshold
+    value: 8

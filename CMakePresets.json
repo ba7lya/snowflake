@@ -1,476 +1,284 @@
 {
-  "version": 7,
-  "cmakeMinimumRequired": {
-    "major": 3,
-    "minor": 25,
-    "patch": 3
-  },
-  "configurePresets": [
-    {
-      "name": "MSVC-2022-x86-Ninja",
-      "displayName": "MSVC-2022-x86-Ninja",
-      "generator": "Ninja Multi-Config",
-      "toolset": {
-        "value": "v143,host=x86",
-        "strategy": "external"
-      },
-      "architecture": {
-        "value": "win32",
-        "strategy": "external"
-      },
-      "binaryDir": "${sourceDir}/build",
-      "cacheVariables": {
-        "VCPKG_HOST_TRIPLET": "x86-windows",
-        "VCPKG_TARGET_TRIPLET": "x86-windows",
-        "CMAKE_CONFIGURATION_TYPES": "Debug;Release;RelWithDebInfo;MinSizeRel",
-        "CMAKE_C_COMPILER": "cl.exe",
-        "CMAKE_CXX_COMPILER": "cl.exe",
-        "CMAKE_MAKE_PROGRAM": "ninja",
-        "CMAKE_EXPORT_COMPILE_COMMANDS": true,
-        "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/thirdparty/vcpkg/scripts/buildsystems/vcpkg.cmake"
-      },
-      "warnings": {
-        "dev": false,
-        "systemVars": true,
-        "uninitialized": true,
-        "unusedCli": true,
-        "deprecated": true
-      },
-      "errors": {
-        "dev": false,
-        "deprecated": true
-      }
+    "version": 7,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 25,
+        "patch": 0
     },
-    {
-      "name": "MSVC-2022-x64-Ninja",
-      "displayName": "MSVC-2022-x64-Ninja",
-      "generator": "Ninja Multi-Config",
-      "toolset": {
-        "value": "v143,host=x64",
-        "strategy": "external"
-      },
-      "architecture": {
-        "value": "x64",
-        "strategy": "external"
-      },
-      "binaryDir": "${sourceDir}/build",
-      "cacheVariables": {
-        "VCPKG_HOST_TRIPLET": "x64-windows",
-        "VCPKG_TARGET_TRIPLET": "x64-windows",
-        "CMAKE_CONFIGURATION_TYPES": "Debug;Release;RelWithDebInfo;MinSizeRel",
-        "CMAKE_C_COMPILER": "cl.exe",
-        "CMAKE_CXX_COMPILER": "cl.exe",
-        "CMAKE_MAKE_PROGRAM": "ninja",
-        "CMAKE_EXPORT_COMPILE_COMMANDS": true,
-        "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/thirdparty/vcpkg/scripts/buildsystems/vcpkg.cmake"
-      },
-      "warnings": {
-        "dev": false,
-        "systemVars": true,
-        "uninitialized": true,
-        "unusedCli": true,
-        "deprecated": true
-      },
-      "errors": {
-        "dev": false,
-        "deprecated": true
-      }
-    },
-    {
-      "name": "MSVC-2019-x86-Ninja",
-      "displayName": "MSVC-2019-x86-Ninja",
-      "generator": "Ninja Multi-Config",
-      "toolset": {
-        "value": "v142,host=x86",
-        "strategy": "external"
-      },
-      "architecture": {
-        "value": "win32",
-        "strategy": "external"
-      },
-      "binaryDir": "${sourceDir}/build",
-      "cacheVariables": {
-        "VCPKG_HOST_TRIPLET": "x86-windows",
-        "VCPKG_TARGET_TRIPLET": "x86-windows",
-        "CMAKE_CONFIGURATION_TYPES": "Debug;Release;RelWithDebInfo;MinSizeRel",
-        "CMAKE_C_COMPILER": "cl.exe",
-        "CMAKE_CXX_COMPILER": "cl.exe",
-        "CMAKE_MAKE_PROGRAM": "ninja",
-        "CMAKE_EXPORT_COMPILE_COMMANDS": true,
-        "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/thirdparty/vcpkg/scripts/buildsystems/vcpkg.cmake"
-      },
-      "warnings": {
-        "dev": false,
-        "systemVars": true,
-        "uninitialized": true,
-        "unusedCli": true,
-        "deprecated": true
-      },
-      "errors": {
-        "dev": false,
-        "deprecated": true
-      }
-    },
-    {
-      "name": "MSVC-2019-x64-Ninja",
-      "displayName": "MSVC-2019-x64-Ninja",
-      "generator": "Ninja Multi-Config",
-      "toolset": {
-        "value": "v142,host=x64",
-        "strategy": "external"
-      },
-      "architecture": {
-        "value": "x64",
-        "strategy": "external"
-      },
-      "binaryDir": "${sourceDir}/build",
-      "cacheVariables": {
-        "VCPKG_HOST_TRIPLET": "x64-windows",
-        "VCPKG_TARGET_TRIPLET": "x64-windows",
-        "CMAKE_CONFIGURATION_TYPES": "Debug;Release;RelWithDebInfo;MinSizeRel",
-        "CMAKE_C_COMPILER": "cl.exe",
-        "CMAKE_CXX_COMPILER": "cl.exe",
-        "CMAKE_MAKE_PROGRAM": "ninja",
-        "CMAKE_EXPORT_COMPILE_COMMANDS": true,
-        "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/thirdparty/vcpkg/scripts/buildsystems/vcpkg.cmake"
-      },
-      "warnings": {
-        "dev": false,
-        "systemVars": true,
-        "uninitialized": true,
-        "unusedCli": true,
-        "deprecated": true
-      },
-      "errors": {
-        "dev": false,
-        "deprecated": true
-      }
-    },
-    {
-      "name": "MSVC-2017-x86-Ninja",
-      "displayName": "MSVC-2017-x86-Ninja",
-      "generator": "Ninja Multi-Config",
-      "toolset": {
-        "value": "v141,host=x86",
-        "strategy": "external"
-      },
-      "architecture": {
-        "value": "win32",
-        "strategy": "external"
-      },
-      "binaryDir": "${sourceDir}/build",
-      "cacheVariables": {
-        "VCPKG_HOST_TRIPLET": "x86-windows",
-        "VCPKG_TARGET_TRIPLET": "x86-windows",
-        "CMAKE_CONFIGURATION_TYPES": "Debug;Release;RelWithDebInfo;MinSizeRel",
-        "CMAKE_C_COMPILER": "cl.exe",
-        "CMAKE_CXX_COMPILER": "cl.exe",
-        "CMAKE_MAKE_PROGRAM": "ninja",
-        "CMAKE_EXPORT_COMPILE_COMMANDS": true,
-        "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/thirdparty/vcpkg/scripts/buildsystems/vcpkg.cmake"
-      },
-      "warnings": {
-        "dev": false,
-        "systemVars": true,
-        "uninitialized": true,
-        "unusedCli": true,
-        "deprecated": true
-      },
-      "errors": {
-        "dev": false,
-        "deprecated": true
-      }
-    },
-    {
-      "name": "MSVC-2017-x64-Ninja",
-      "displayName": "MSVC-2017-x64-Ninja",
-      "generator": "Ninja Multi-Config",
-      "toolset": {
-        "value": "v141,host=x64",
-        "strategy": "external"
-      },
-      "architecture": {
-        "value": "x64",
-        "strategy": "external"
-      },
-      "binaryDir": "${sourceDir}/build",
-      "cacheVariables": {
-        "VCPKG_HOST_TRIPLET": "x64-windows",
-        "VCPKG_TARGET_TRIPLET": "x64-windows",
-        "CMAKE_CONFIGURATION_TYPES": "Debug;Release;RelWithDebInfo;MinSizeRel",
-        "CMAKE_C_COMPILER": "cl.exe",
-        "CMAKE_CXX_COMPILER": "cl.exe",
-        "CMAKE_MAKE_PROGRAM": "ninja",
-        "CMAKE_EXPORT_COMPILE_COMMANDS": true,
-        "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/thirdparty/vcpkg/scripts/buildsystems/vcpkg.cmake"
-      },
-      "warnings": {
-        "dev": false,
-        "systemVars": true,
-        "uninitialized": true,
-        "unusedCli": true,
-        "deprecated": true
-      },
-      "errors": {
-        "dev": false,
-        "deprecated": true
-      }
-    }
-  ],
-  "buildPresets": [
-    {
-      "name": "MSVC-2022-x86-Debug",
-      "description": "",
-      "displayName": "",
-      "configuration": "Debug",
-      "configurePreset": "MSVC-2022-x86-Ninja",
-      "cleanFirst": false,
-      "jobs": 12
-    },
-    {
-      "name": "MSVC-2022-x86-Release",
-      "description": "",
-      "displayName": "",
-      "configuration": "Release",
-      "configurePreset": "MSVC-2022-x86-Ninja",
-      "cleanFirst": false,
-      "jobs": 12
-    },
-    {
-      "name": "MSVC-2022-x86-RelWithDebInfo",
-      "description": "",
-      "displayName": "",
-      "configuration": "RelWithDebInfo",
-      "configurePreset": "MSVC-2022-x86-Ninja",
-      "cleanFirst": false,
-      "jobs": 12
-    },
-    {
-      "name": "MSVC-2022-x86-MinSizeRel",
-      "description": "",
-      "displayName": "",
-      "configuration": "MinSizeRel",
-      "configurePreset": "MSVC-2022-x86-Ninja",
-      "cleanFirst": false,
-      "jobs": 12
-    },
-    {
-      "name": "MSVC-2022-x64-Debug",
-      "description": "",
-      "displayName": "",
-      "configuration": "Debug",
-      "configurePreset": "MSVC-2022-x64-Ninja",
-      "cleanFirst": false,
-      "jobs": 12
-    },
-    {
-      "name": "MSVC-2022-x64-Release",
-      "description": "",
-      "displayName": "",
-      "configuration": "Release",
-      "configurePreset": "MSVC-2022-x64-Ninja",
-      "cleanFirst": false,
-      "jobs": 12
-    },
-    {
-      "name": "MSVC-2022-x64-RelWithDebInfo",
-      "description": "",
-      "displayName": "",
-      "configuration": "RelWithDebInfo",
-      "configurePreset": "MSVC-2022-x64-Ninja",
-      "cleanFirst": false,
-      "jobs": 12
-    },
-    {
-      "name": "MSVC-2022-x64-MinSizeRel",
-      "description": "",
-      "displayName": "",
-      "configuration": "MinSizeRel",
-      "configurePreset": "MSVC-2022-x64-Ninja",
-      "cleanFirst": false,
-      "jobs": 12
-    },
-    {
-      "name": "MSVC-2019-x86-Debug",
-      "description": "",
-      "displayName": "",
-      "configuration": "Debug",
-      "configurePreset": "MSVC-2019-x86-Ninja",
-      "cleanFirst": false,
-      "jobs": 12
-    },
-    {
-      "name": "MSVC-2019-x86-Release",
-      "description": "",
-      "displayName": "",
-      "configuration": "Release",
-      "configurePreset": "MSVC-2019-x86-Ninja",
-      "cleanFirst": false,
-      "jobs": 12
-    },
-    {
-      "name": "MSVC-2019-x86-RelWithDebInfo",
-      "description": "",
-      "displayName": "",
-      "configuration": "RelWithDebInfo",
-      "configurePreset": "MSVC-2019-x86-Ninja",
-      "cleanFirst": false,
-      "jobs": 12
-    },
-    {
-      "name": "MSVC-2019-x86-MinSizeRel",
-      "description": "",
-      "displayName": "",
-      "configuration": "MinSizeRel",
-      "configurePreset": "MSVC-2019-x86-Ninja",
-      "cleanFirst": false,
-      "jobs": 12
-    },
-    {
-      "name": "MSVC-2019-x64-Debug",
-      "description": "",
-      "displayName": "",
-      "configuration": "Debug",
-      "configurePreset": "MSVC-2019-x64-Ninja",
-      "cleanFirst": false,
-      "jobs": 12
-    },
-    {
-      "name": "MSVC-2019-x64-Release",
-      "description": "",
-      "displayName": "",
-      "configuration": "Release",
-      "configurePreset": "MSVC-2019-x64-Ninja",
-      "cleanFirst": false,
-      "jobs": 12
-    },
-    {
-      "name": "MSVC-2019-x64-RelWithDebInfo",
-      "description": "",
-      "displayName": "",
-      "configuration": "RelWithDebInfo",
-      "configurePreset": "MSVC-2019-x64-Ninja",
-      "cleanFirst": false,
-      "jobs": 12
-    },
-    {
-      "name": "MSVC-2019-x64-MinSizeRel",
-      "description": "",
-      "displayName": "",
-      "configuration": "MinSizeRel",
-      "configurePreset": "MSVC-2019-x64-Ninja",
-      "cleanFirst": false,
-      "jobs": 12
-    },
-    {
-      "name": "MSVC-2017-x86-Debug",
-      "description": "",
-      "displayName": "",
-      "configuration": "Debug",
-      "configurePreset": "MSVC-2017-x86-Ninja",
-      "cleanFirst": false,
-      "jobs": 12
-    },
-    {
-      "name": "MSVC-2017-x86-Release",
-      "description": "",
-      "displayName": "",
-      "configuration": "Release",
-      "configurePreset": "MSVC-2017-x86-Ninja",
-      "cleanFirst": false,
-      "jobs": 12
-    },
-    {
-      "name": "MSVC-2017-x86-RelWithDebInfo",
-      "description": "",
-      "displayName": "",
-      "configuration": "RelWithDebInfo",
-      "configurePreset": "MSVC-2017-x86-Ninja",
-      "cleanFirst": false,
-      "jobs": 12
-    },
-    {
-      "name": "MSVC-2017-x86-MinSizeRel",
-      "description": "",
-      "displayName": "",
-      "configuration": "MinSizeRel",
-      "configurePreset": "MSVC-2017-x86-Ninja",
-      "cleanFirst": false,
-      "jobs": 12
-    },
-    {
-      "name": "MSVC-2017-x64-Debug",
-      "description": "",
-      "displayName": "",
-      "configuration": "Debug",
-      "configurePreset": "MSVC-2017-x64-Ninja",
-      "cleanFirst": false,
-      "jobs": 12
-    },
-    {
-      "name": "MSVC-2017-x64-Release",
-      "description": "",
-      "displayName": "",
-      "configuration": "Release",
-      "configurePreset": "MSVC-2017-x64-Ninja",
-      "cleanFirst": false,
-      "jobs": 12
-    },
-    {
-      "name": "MSVC-2017-x64-RelWithDebInfo",
-      "description": "",
-      "displayName": "",
-      "configuration": "RelWithDebInfo",
-      "configurePreset": "MSVC-2017-x64-Ninja",
-      "cleanFirst": false,
-      "jobs": 12
-    },
-    {
-      "name": "MSVC-2017-x64-MinSizeRel",
-      "description": "",
-      "displayName": "",
-      "configuration": "MinSizeRel",
-      "configurePreset": "MSVC-2017-x64-Ninja",
-      "cleanFirst": false,
-      "jobs": 12
-    }
-  ],
-  "testPresets": [
-    {
-      "name": "MSVC-2022-x86-Test",
-      "description": "",
-      "displayName": "",
-      "configurePreset": "MSVC-2022-x86-Ninja"
-    },
-    {
-      "name": "MSVC-2022-x64-Test",
-      "description": "",
-      "displayName": "",
-      "configurePreset": "MSVC-2022-x64-Ninja"
-    },
-    {
-      "name": "MSVC-2019-x86-Test",
-      "description": "",
-      "displayName": "",
-      "configurePreset": "MSVC-2019-x86-Ninja"
-    },
-    {
-      "name": "MSVC-2019-x64-Test",
-      "description": "",
-      "displayName": "",
-      "configurePreset": "MSVC-2019-x64-Ninja"
-    },
-    {
-      "name": "MSVC-2017-x86-Test",
-      "description": "",
-      "displayName": "",
-      "configurePreset": "MSVC-2017-x86-Ninja"
-    },
-    {
-      "name": "MSVC-2017-x64-Test",
-      "description": "",
-      "displayName": "",
-      "configurePreset": "MSVC-2017-x64-Ninja"
-    }
-  ]
+    "configurePresets": [
+        {
+            "name": "dev-base",
+            "hidden": true,
+            "description": "本地开发基线: 使用仓库内置 vcpkg submodule(需先 bootstrap)",
+            "binaryDir": "${sourceDir}/build/${presetName}",
+            "cacheVariables": {
+                "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/thirdparty/vcpkg/scripts/buildsystems/vcpkg.cmake",
+                "SNOWFLAKE_BUILD_TESTS": "ON",
+                "SNOWFLAKE_BUILD_EXAMPLES": "ON",
+                "SNOWFLAKE_BUILD_BENCHMARK": "ON",
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+            }
+        },
+        {
+            "name": "ci-base",
+            "hidden": true,
+            "description": "CI baseline: toolchain injected by lukka/run-vcpkg from the runner's preinstalled vcpkg",
+            "binaryDir": "${sourceDir}/build/${presetName}",
+            "cacheVariables": {
+                "CMAKE_TOOLCHAIN_FILE": "$env{CMAKE_TOOLCHAIN_FILE}",
+                "SNOWFLAKE_BUILD_TESTS": "ON",
+                "SNOWFLAKE_BUILD_EXAMPLES": "ON",
+                "SNOWFLAKE_BUILD_BENCHMARK": "ON",
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+            }
+        },
+        {
+            "name": "msvc-base",
+            "hidden": true,
+            "inherits": "dev-base",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            },
+            "cacheVariables": {
+                "CMAKE_CXX_COMPILER": "cl.exe",
+                "VCPKG_HOST_TRIPLET": "x64-windows",
+                "CMAKE_CONFIGURATION_TYPES": "Debug;Release;RelWithDebInfo;MinSizeRel"
+            }
+        },
+        {
+            "name": "msvc-x64",
+            "displayName": "MSVC x64 (Ninja Multi-Config)",
+            "description": "需在 VS Developer Prompt 中运行(或在 IDE 内由 CMake Tools 选择 preset)",
+            "inherits": "msvc-base",
+            "generator": "Ninja Multi-Config",
+            "architecture": {
+                "value": "x64",
+                "strategy": "external"
+            },
+            "toolset": {
+                "value": "host=x64",
+                "strategy": "external"
+            },
+            "cacheVariables": {
+                "VCPKG_TARGET_TRIPLET": "x64-windows"
+            }
+        },
+        {
+            "name": "msvc-x86",
+            "displayName": "MSVC x86 (Ninja Multi-Config)",
+            "description": "需在 VS Developer Prompt 中运行",
+            "inherits": "msvc-base",
+            "generator": "Ninja Multi-Config",
+            "architecture": {
+                "value": "win32",
+                "strategy": "external"
+            },
+            "toolset": {
+                "value": "host=x64",
+                "strategy": "external"
+            },
+            "cacheVariables": {
+                "VCPKG_TARGET_TRIPLET": "x86-windows",
+                "VCPKG_HOST_TRIPLET": "x86-windows"
+            }
+        },
+        {
+            "name": "gcc-x64",
+            "displayName": "GCC x64 (Ninja)",
+            "description": "本地开发: 内置 vcpkg submodule + x64-linux",
+            "inherits": "dev-base",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Linux"
+            },
+            "generator": "Ninja",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_CXX_COMPILER": "g++",
+                "VCPKG_TARGET_TRIPLET": "x64-linux",
+                "VCPKG_HOST_TRIPLET": "x64-linux"
+            }
+        },
+        {
+            "name": "clang-x64",
+            "displayName": "Clang x64 (Ninja)",
+            "inherits": "gcc-x64",
+            "cacheVariables": {
+                "CMAKE_CXX_COMPILER": "clang++"
+            }
+        },
+        {
+            "name": "ci-msvc-x64",
+            "displayName": "CI MSVC x64 Release",
+            "inherits": "ci-base",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            },
+            "generator": "Ninja Multi-Config",
+            "cacheVariables": {
+                "CMAKE_CXX_COMPILER": "cl",
+                "VCPKG_TARGET_TRIPLET": "x64-windows",
+                "VCPKG_HOST_TRIPLET": "x64-windows"
+            }
+        },
+        {
+            "name": "ci-linux-gcc-x64",
+            "displayName": "CI Linux GCC x64 Release",
+            "inherits": "ci-base",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Linux"
+            },
+            "generator": "Ninja",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "CMAKE_CXX_COMPILER": "g++",
+                "VCPKG_TARGET_TRIPLET": "x64-linux",
+                "VCPKG_HOST_TRIPLET": "x64-linux"
+            }
+        },
+        {
+            "name": "ci-linux-clang-x64",
+            "displayName": "CI Linux Clang x64 Release",
+            "inherits": "ci-linux-gcc-x64",
+            "cacheVariables": {
+                "CMAKE_CXX_COMPILER": "clang++"
+            }
+        },
+        {
+            "name": "lint",
+            "displayName": "Lint (library only, no third-party deps)",
+            "description": "Configures the library alone so CI can run clang-tidy without vcpkg",
+            "inherits": "dev-base",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Linux"
+            },
+            "generator": "Ninja",
+            "cacheVariables": {
+                "CMAKE_TOOLCHAIN_FILE": "",
+                "CMAKE_BUILD_TYPE": "Release",
+                "SNOWFLAKE_BUILD_TESTS": "OFF",
+                "SNOWFLAKE_BUILD_EXAMPLES": "OFF",
+                "SNOWFLAKE_BUILD_BENCHMARK": "OFF"
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "msvc-x64-debug",
+            "configurePreset": "msvc-x64",
+            "configuration": "Debug"
+        },
+        {
+            "name": "msvc-x64-release",
+            "configurePreset": "msvc-x64",
+            "configuration": "Release"
+        },
+        {
+            "name": "msvc-x86-debug",
+            "configurePreset": "msvc-x86",
+            "configuration": "Debug"
+        },
+        {
+            "name": "msvc-x86-release",
+            "configurePreset": "msvc-x86",
+            "configuration": "Release"
+        },
+        {
+            "name": "gcc-x64",
+            "configurePreset": "gcc-x64"
+        },
+        {
+            "name": "clang-x64",
+            "configurePreset": "clang-x64"
+        },
+        {
+            "name": "ci-msvc-x64",
+            "configurePreset": "ci-msvc-x64",
+            "configuration": "Release"
+        },
+        {
+            "name": "ci-msvc-x64-debug",
+            "configurePreset": "ci-msvc-x64",
+            "configuration": "Debug"
+        },
+        {
+            "name": "ci-linux-gcc-x64",
+            "configurePreset": "ci-linux-gcc-x64"
+        },
+        {
+            "name": "ci-linux-clang-x64",
+            "configurePreset": "ci-linux-clang-x64"
+        }
+    ],
+    "testPresets": [
+        {
+            "name": "msvc-x64-debug",
+            "configurePreset": "msvc-x64",
+            "configuration": "Debug",
+            "output": {
+                "outputOnFailure": true
+            }
+        },
+        {
+            "name": "msvc-x64-release",
+            "configurePreset": "msvc-x64",
+            "configuration": "Release",
+            "output": {
+                "outputOnFailure": true
+            }
+        },
+        {
+            "name": "gcc-x64",
+            "configurePreset": "gcc-x64",
+            "output": {
+                "outputOnFailure": true
+            }
+        },
+        {
+            "name": "clang-x64",
+            "configurePreset": "clang-x64",
+            "output": {
+                "outputOnFailure": true
+            }
+        },
+        {
+            "name": "ci-msvc-x64",
+            "configurePreset": "ci-msvc-x64",
+            "configuration": "Release",
+            "output": {
+                "outputOnFailure": true
+            }
+        },
+        {
+            "name": "ci-msvc-x64-debug",
+            "configurePreset": "ci-msvc-x64",
+            "configuration": "Debug",
+            "output": {
+                "outputOnFailure": true
+            }
+        },
+        {
+            "name": "ci-linux-gcc-x64",
+            "configurePreset": "ci-linux-gcc-x64",
+            "output": {
+                "outputOnFailure": true
+            }
+        },
+        {
+            "name": "ci-linux-clang-x64",
+            "configurePreset": "ci-linux-clang-x64",
+            "output": {
+                "outputOnFailure": true
+            }
+        }
+    ]
 }
