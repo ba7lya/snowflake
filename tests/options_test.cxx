@@ -24,7 +24,7 @@ TEST(options_test, defaults_resolve) {
     EXPECT_EQ(resolved.max_seq_num, 63U);
     EXPECT_EQ(resolved.min_seq_num, 5U);
     EXPECT_EQ(resolved.base_time, default_base_time);
-    EXPECT_EQ(resolved.algo, algo::drift);
+    EXPECT_EQ(resolved.algo, algorithm::drift);
     EXPECT_EQ(resolved.worker_id_bit_len, 6);
     EXPECT_EQ(resolved.seq_bit_len, 6);
 }
@@ -133,7 +133,7 @@ TEST(options_test, constructor_validates_and_throws) {
 TEST(options_regression_test, consecutive_seq_in_same_tick_drift) {
     fake_clock::set(reference_now_ms);
     options o;
-    o.algo = algo::drift;
+    o.algo = algorithm::drift;
     basic_generator<fake_clock> gen(o);
     const auto first = gen.decode(gen.next_id());
     const auto second = gen.decode(gen.next_id());
@@ -144,7 +144,7 @@ TEST(options_regression_test, consecutive_seq_in_same_tick_drift) {
 TEST(options_regression_test, consecutive_seq_in_same_tick_original) {
     fake_clock::set(reference_now_ms);
     options o;
-    o.algo = algo::original;
+    o.algo = algorithm::original;
     basic_generator<fake_clock> gen(o);
     const auto first = gen.decode(gen.next_id());
     const auto second = gen.decode(gen.next_id());

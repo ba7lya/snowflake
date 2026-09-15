@@ -19,11 +19,11 @@ auto [tick, worker, seq] = gen.decode(id);
 ## 特性
 
 - **线程安全**：值语义 `generator`（非单例），每个实例绑定一个 `worker_id`，多线程共享安全。
-- **双算法**（`options::algo`）：
-  - `algo::drift`（默认，漂移算法）：每毫秒序列耗尽时把内部时间戳推向未来而不是睡眠等待；
+- **双算法**（`options` 成员 `algo`，类型 `algorithm`）：
+  - `algorithm::drift`（默认，漂移算法）：每毫秒序列耗尽时把内部时间戳推向未来而不是睡眠等待；
     时钟回拨用每毫秒序列号预留位 1-4 补偿（0 留给手工注入的新值），可无限次回拨而不产生重复 ID。
-  - `algo::original`（传统雪花）：序列耗尽时自旋等待下一毫秒。**不处理时钟回拨**——
-    若运行环境时钟可能倒退（NTP 步进、虚拟机迁移等），请选择 `algo::drift`。
+  - `algorithm::original`（传统雪花）：序列耗尽时自旋等待下一毫秒。**不处理时钟回拨**——
+    若运行环境时钟可能倒退（NTP 步进、虚拟机迁移等），请选择 `algorithm::drift`。
 - **可注入时钟**：`basic_generator<Clock>` 接受任何满足 `ms_clock` 概念的时钟策略，
   测试可用假时钟免睡眠地验证回拨/耗尽路径（见 `tests/fake_clock.hxx`）。
 - **ID 布局**：`(time_tick << ts_shift) | (worker_id << seq_bit_len) | seq`，
@@ -78,7 +78,7 @@ target_link_libraries(my_app PRIVATE ba7lya::snowflake)
 
 | 字段 | 默认 | 说明 |
 |---|---|---|
-| `algo` | `algo::drift` | 算法选择 |
+| `algo` | `algorithm::drift` | 算法选择（类型 `algorithm`） |
 | `base_time` | 1582136402000 | 纪元（ms），`[1990-01-01, now]`，0 = 用默认值 |
 | `worker_id` | 0 | 机器码，`[0, 2^worker_id_bit_len-1]` |
 | `worker_id_bit_len` | 6 | `[1, 21]` |
@@ -102,7 +102,8 @@ target_link_libraries(my_app PRIVATE ba7lya::snowflake)
 
 - 单例 `generator::create_instance()/next_id()` 移除——直接构造值对象 `generator`；
   header 内定义静态裸指针的旧写法有 ODR 风险且不可测试。
-- `algo::SHIFT/ORIGINAL` 更名为 `algo::drift/original`（小写下划线规范）。
+- `algo::SHIFT/ORIGINAL` 更名为 `algorithm::drift/original`（枚举类型 `algorithm`，
+  成员仍名 `algo`——类型与成员同名会触发 GCC `-Wchanges-meaning` 错误）。
 - 旧 `set_options` 中 `opts_.max_seq_num` 从未被赋值（局部变量遮蔽 bug），导致 drift 恒判
   序列耗尽、original 序列恒 0；已修复并由回归测试钉住（`tests/options_test.cxx`）。
 - 旧 original 路径的 `& max_seq_num` 掩码可能产生协议预留的 seq 1-4；已改为按范围推进。

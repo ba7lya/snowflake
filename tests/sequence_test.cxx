@@ -61,7 +61,7 @@ TEST_F(sequence_test, drift_high_water_runs_ahead_of_wall_clock) {
 
 TEST_F(sequence_test, original_blocks_until_clock_advances) {
     options o;
-    o.algo = algo::original;
+    o.algo = algorithm::original;
     o.seq_bit_len = 3;
     o.min_seq_num = 5; // 3 sequences per ms: 5,6,7
     basic_generator<fake_clock> gen(o);

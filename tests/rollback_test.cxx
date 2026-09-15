@@ -113,9 +113,9 @@ TEST_F(rollback_test, original_documented_unsafe_behavior) {
     // to a prior tick the sequence restarts at min --
     // this test pins the documented-known-unsafe fact rather than endorsing it.
     // The README warns users:
-    // pick algo::drift if the clock may jump backwards.
+    // pick algorithm::drift if the clock may jump backwards.
     options o;
-    o.algo = algo::original;
+    o.algo = algorithm::original;
     basic_generator<fake_clock> gen(o);
 
     const int64_t first_tick_id = gen.next_id();

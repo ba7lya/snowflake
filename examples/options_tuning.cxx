@@ -8,7 +8,7 @@
 #include <iostream>
 #include <stdexcept>
 
-using ba7lya::snowflake::algo;
+using ba7lya::snowflake::algorithm;
 using ba7lya::snowflake::generator;
 using ba7lya::snowflake::options;
 
@@ -34,7 +34,7 @@ int main() {
     // custom bit widths: 10-bit worker + 8-bit seq, classic algorithm
     const bool tuned_ok = try_build(
         options {
-            .algo = algo::original,
+            .algo = algorithm::original,
             .worker_id = 42,
             .worker_id_bit_len = 10,
             .seq_bit_len = 8,

@@ -25,7 +25,7 @@ namespace ba7lya::snowflake {
 ///
 /// @brief ID generation algorithm selection.
 ///
-enum class algo : std::uint8_t {
+enum class algorithm : std::uint8_t {
     drift,    ///< Drift algorithm: pushes the timestamp into the future when the per-ms
               /// sequence is exhausted; clock rollbacks are compensated with reserved
               /// sequence numbers 1-4
@@ -39,7 +39,7 @@ enum class algo : std::uint8_t {
 ///
 struct options {
     /// Generation algorithm, defaults to the drift algorithm
-    algo algo { algo::drift };
+    algorithm algo { algorithm::drift };
 
     /// Base time in ms since Unix epoch. Must not be later than the current system
     /// time. 0 means "use default_base_time".
@@ -225,7 +225,7 @@ public:
     [[nodiscard]]
     int64_t next_id() {
         std::scoped_lock lock(mtx_);
-        return opts_.algo == algo::original ? next_original_id() : next_drift_id();
+        return opts_.algo == algorithm::original ? next_original_id() : next_drift_id();
     }
 
     /// @brief The resolved configuration.
@@ -382,7 +382,7 @@ private:
         else {
             // NOTE: clock rollbacks (time_tick < last_time_tick_) also land here --
             // the classic algorithm does not handle them and may repeat ids. See the
-            // README warning; choose algo::drift if the clock may jump backwards.
+            // README warning; choose algorithm::drift if the clock may jump backwards.
             curr_seq_num_ = opts_.min_seq_num;
         }
 

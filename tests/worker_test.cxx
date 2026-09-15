@@ -71,7 +71,7 @@ TEST(worker_test, same_worker_same_tick_different_workers) {
     EXPECT_NE(ga.next_id(), gb.next_id());
 }
 
-class monotonic_test : public ::testing::TestWithParam<algo> {};
+class monotonic_test : public ::testing::TestWithParam<algorithm> {};
 
 TEST_P(monotonic_test, strictly_increasing_within_one_worker) {
     options o;
@@ -87,4 +87,8 @@ TEST_P(monotonic_test, strictly_increasing_within_one_worker) {
     }
 }
 
-INSTANTIATE_TEST_SUITE_P(algos, monotonic_test, ::testing::Values(algo::drift, algo::original));
+INSTANTIATE_TEST_SUITE_P(
+    algos,
+    monotonic_test,
+    ::testing::Values(algorithm::drift, algorithm::original)
+);

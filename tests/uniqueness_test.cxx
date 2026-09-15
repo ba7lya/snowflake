@@ -12,7 +12,7 @@
 #include <unordered_set>
 #include <vector>
 
-using ba7lya::snowflake::algo;
+using ba7lya::snowflake::algorithm;
 using ba7lya::snowflake::generator;
 using ba7lya::snowflake::options;
 
@@ -25,7 +25,7 @@ void collect_unique(generator& gen, std::unordered_set<int64_t>& out, std::size_
 
 } // namespace
 
-class uniqueness_test : public ::testing::TestWithParam<algo> {};
+class uniqueness_test : public ::testing::TestWithParam<algorithm> {};
 
 TEST_P(uniqueness_test, single_thread_one_million) {
     options o;
@@ -65,4 +65,8 @@ TEST_P(uniqueness_test, eight_threads_share_one_generator) {
     EXPECT_EQ(all.size(), static_cast<std::size_t>(thread_count) * per_thread);
 }
 
-INSTANTIATE_TEST_SUITE_P(algos, uniqueness_test, ::testing::Values(algo::drift, algo::original));
+INSTANTIATE_TEST_SUITE_P(
+    algos,
+    uniqueness_test,
+    ::testing::Values(algorithm::drift, algorithm::original)
+);
