@@ -9,7 +9,7 @@
         {
             "name": "dev-base",
             "hidden": true,
-            "description": "本地开发基线: 使用仓库内置 vcpkg submodule(需先 bootstrap)",
+            "description": "Local dev baseline: uses the vendored vcpkg submodule (run bootstrap first)",
             "binaryDir": "${sourceDir}/build/${presetName}",
             "cacheVariables": {
                 "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/thirdparty/vcpkg/scripts/buildsystems/vcpkg.cmake",
@@ -22,10 +22,10 @@
         {
             "name": "ci-base",
             "hidden": true,
-            "description": "CI baseline: toolchain injected by lukka/run-vcpkg from the runner's preinstalled vcpkg",
+            "description": "CI baseline: VCPKG_ROOT points at the run-vcpkg instance pinned to the manifest baseline",
             "binaryDir": "${sourceDir}/build/${presetName}",
             "cacheVariables": {
-                "CMAKE_TOOLCHAIN_FILE": "$env{VCPKG_INSTALLATION_ROOT}/scripts/buildsystems/vcpkg.cmake",
+                "CMAKE_TOOLCHAIN_FILE": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
                 "SNOWFLAKE_BUILD_TESTS": "ON",
                 "SNOWFLAKE_BUILD_EXAMPLES": "ON",
                 "SNOWFLAKE_BUILD_BENCHMARK": "ON",
@@ -50,7 +50,7 @@
         {
             "name": "msvc-x64",
             "displayName": "MSVC x64 (Ninja Multi-Config)",
-            "description": "需在 VS Developer Prompt 中运行(或在 IDE 内由 CMake Tools 选择 preset)",
+            "description": "Run from a VS Developer Prompt (or pick the preset via IDE CMake Tools)",
             "inherits": "msvc-base",
             "generator": "Ninja Multi-Config",
             "architecture": {
@@ -68,7 +68,7 @@
         {
             "name": "msvc-x86",
             "displayName": "MSVC x86 (Ninja Multi-Config)",
-            "description": "需在 VS Developer Prompt 中运行",
+            "description": "Run from a VS Developer Prompt",
             "inherits": "msvc-base",
             "generator": "Ninja Multi-Config",
             "architecture": {
@@ -87,7 +87,7 @@
         {
             "name": "gcc-x64",
             "displayName": "GCC x64 (Ninja)",
-            "description": "本地开发: 内置 vcpkg submodule + x64-linux",
+            "description": "Local dev: vendored vcpkg submodule + x64-linux",
             "inherits": "dev-base",
             "condition": {
                 "type": "equals",

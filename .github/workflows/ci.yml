@@ -31,18 +31,21 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
-        # thirdparty/vcpkg is NOT checked out: CI uses the runner's preinstalled vcpkg
-        # (the vcpkg.json builtin-baseline pins all port versions regardless).
+        # thirdparty/vcpkg is NOT checked out; see the run-vcpkg step below.
 
       - name: Setup MSVC dev environment
         if: runner.os == 'Windows'
         uses: ilammy/msvc-dev-cmd@v1
 
-      - name: Setup vcpkg (preinstalled on runner)
+      - name: Setup vcpkg (pinned to vcpkg.json builtin-baseline)
         uses: lukka/run-vcpkg@v11
         with:
           vcpkgJsonGlob: vcpkg.json
           runVcpkgInstall: true
+          # The runner's preinstalled vcpkg is a shallow clone that may not contain a
+          # fresh builtin-baseline commit; this makes the action check out that exact
+          # revision itself and export VCPKG_ROOT, which the ci-* presets use.
+          vcpkgGitCommitId: a1cae005c39be7b18ba319fced856b68d7276271
 
       - name: Configure
         run: cmake --preset ${{ matrix.preset }}
@@ -95,6 +98,7 @@ jobs:
         with:
           vcpkgJsonGlob: vcpkg.json
           runVcpkgInstall: true
+          vcpkgGitCommitId: a1cae005c39be7b18ba319fced856b68d7276271
 
       - name: Check formatting
         run: |
