@@ -30,7 +30,7 @@ jobs:
             config: ""
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         # thirdparty/vcpkg is NOT checked out; see the run-vcpkg step below.
 
       - name: Setup MSVC dev environment
@@ -73,16 +73,17 @@ jobs:
 
       - name: Upload test results
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: test-results-${{ matrix.display_name }}
-          path: test-results.xml
+          # ctest resolves --output-junit relative to the build tree, not the workspace
+          path: build/${{ matrix.preset }}/test-results.xml
 
   lint:
     name: Lint (format + clang-tidy)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Install LLVM 22 tools
         run: |
