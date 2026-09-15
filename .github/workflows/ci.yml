@@ -90,15 +90,28 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y clang-format-22 clang-tidy-22
 
+      - name: Setup vcpkg (headers for gtest/benchmark translation units)
+        uses: lukka/run-vcpkg@v11
+        with:
+          vcpkgJsonGlob: vcpkg.json
+          runVcpkgInstall: true
+
       - name: Check formatting
         run: |
           files=$(find include tests examples benchmark \( -name '*.cxx' -o -name '*.hxx' \))
           clang-format-22 --dry-run --Werror --style=file ${files}
 
-      - name: Configure (library only, no third-party deps)
-        run: cmake --preset lint
+      # Configure only (no build): generates a real compile_commands.json that
+      # covers every TU, including the vcpkg header search paths.
+      - name: Configure
+        run: cmake --preset ci-linux-gcc-x64
 
-      - name: Run clang-tidy
+      # The INTERFACE library has no TU of its own, so the header gets explicit
+      # flags here; header diagnostics inside TUs are covered by HeaderFilterRegex.
+      - name: Run clang-tidy on the library header
+        run: clang-tidy-22 --quiet include/snowflake.hxx -- -std=c++20
+
+      - name: Run clang-tidy on all translation units
         run: |
-          clang-tidy-22 --quiet -p build/lint \
-            include/snowflake.hxx tests/*.cxx examples/*.cxx benchmark/*.cxx
+          clang-tidy-22 --quiet -p build/ci-linux-gcc-x64 \
+            tests/*.cxx examples/*.cxx benchmark/*.cxx

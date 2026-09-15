@@ -54,10 +54,11 @@ ctest --preset gcc-x64
 | `msvc-x64` / `msvc-x86` | 本地 MSVC 开发（vendored vcpkg；VS Developer Prompt） |
 | `gcc-x64` / `clang-x64` | 本地 Linux 开发（vendored vcpkg） |
 | `ci-msvc-x64(-debug)` / `ci-linux-gcc-x64` / `ci-linux-clang-x64` | GitHub Actions（runner 预装 vcpkg） |
-| `lint` | 仅 configure 库本身，供 CI 跑 clang-tidy |
 
 构建产物统一落在 `<build>/bin[/<Config>]`。`SNOWFLAKE_BUILD_TESTS/_EXAMPLES/_BENCHMARK`
-三个开关按需打开（preset 默认全开）。
+三个开关按需打开（preset 默认全开）。CI 的 lint job 用 `ci-linux-gcc-x64` 完整 configure
+（仅生成 compile_commands.json，不编译）后对全部 TU 跑 clang-tidy，库头文件单独用显式
+`-std=c++20` 检查（INTERFACE 库没有自己的 TU）。
 
 ## 使用为依赖
 

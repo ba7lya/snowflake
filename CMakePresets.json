@@ -25,7 +25,7 @@
             "description": "CI baseline: toolchain injected by lukka/run-vcpkg from the runner's preinstalled vcpkg",
             "binaryDir": "${sourceDir}/build/${presetName}",
             "cacheVariables": {
-                "CMAKE_TOOLCHAIN_FILE": "$env{CMAKE_TOOLCHAIN_FILE}",
+                "CMAKE_TOOLCHAIN_FILE": "$env{VCPKG_INSTALLATION_ROOT}/scripts/buildsystems/vcpkg.cmake",
                 "SNOWFLAKE_BUILD_TESTS": "ON",
                 "SNOWFLAKE_BUILD_EXAMPLES": "ON",
                 "SNOWFLAKE_BUILD_BENCHMARK": "ON",
@@ -149,25 +149,6 @@
             "inherits": "ci-linux-gcc-x64",
             "cacheVariables": {
                 "CMAKE_CXX_COMPILER": "clang++"
-            }
-        },
-        {
-            "name": "lint",
-            "displayName": "Lint (library only, no third-party deps)",
-            "description": "Configures the library alone so CI can run clang-tidy without vcpkg",
-            "inherits": "dev-base",
-            "condition": {
-                "type": "equals",
-                "lhs": "${hostSystemName}",
-                "rhs": "Linux"
-            },
-            "generator": "Ninja",
-            "cacheVariables": {
-                "CMAKE_TOOLCHAIN_FILE": "",
-                "CMAKE_BUILD_TYPE": "Release",
-                "SNOWFLAKE_BUILD_TESTS": "OFF",
-                "SNOWFLAKE_BUILD_EXAMPLES": "OFF",
-                "SNOWFLAKE_BUILD_BENCHMARK": "OFF"
             }
         }
     ],
