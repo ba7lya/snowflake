@@ -224,7 +224,7 @@ public:
     ///
     [[nodiscard]]
     int64_t next_id() {
-        std::scoped_lock lock(mtx_);
+        const std::scoped_lock lock(mtx_);
         return opts_.algo == algorithm::original ? next_original_id() : next_drift_id();
     }
 
