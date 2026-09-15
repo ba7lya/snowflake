@@ -4,9 +4,9 @@
 /// original is silently unsafe (documented behavior, pinned by tests)
 ///
 
-#include <ba7lya/snowflake/snowflake.hxx>
 #include <cstdint>
 #include <gtest/gtest.h>
+#include <snowflake.hxx>
 #include <unordered_set>
 
 #include "fake_clock.hxx"

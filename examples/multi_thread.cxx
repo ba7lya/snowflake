@@ -3,9 +3,9 @@
 /// @brief Four threads share one generator; merged results must be unique
 ///
 
-#include <ba7lya/snowflake/snowflake.hxx>
 #include <cstdlib>
 #include <iostream>
+#include <snowflake.hxx>
 #include <thread>
 #include <unordered_set>
 #include <vector>

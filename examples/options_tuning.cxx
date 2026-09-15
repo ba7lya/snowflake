@@ -3,9 +3,9 @@
 /// @brief Custom configuration via designated initializers, with exception demos
 ///
 
-#include <ba7lya/snowflake/snowflake.hxx>
 #include <cstdlib>
 #include <iostream>
+#include <snowflake.hxx>
 #include <stdexcept>
 
 using ba7lya::snowflake::algorithm;

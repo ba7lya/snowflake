@@ -5,10 +5,10 @@
 ///
 
 #include <atomic>
-#include <ba7lya/snowflake/snowflake.hxx>
 #include <chrono>
 #include <cstdint>
 #include <gtest/gtest.h>
+#include <snowflake.hxx>
 #include <thread>
 #include <unordered_set>
 

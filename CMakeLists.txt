@@ -35,9 +35,9 @@ target_compile_options(${PROJECT_NAME} INTERFACE
     "$<$<NOT:$<CXX_COMPILER_ID:MSVC>>:-Wall;-Wextra;-Wpedantic>")
 
 # --- install & export ---
-# In-tree consumers include <ba7lya/snowflake/snowflake.hxx>, which forwards to the
-# library header. At install time the real header is placed directly at that path
-# (no top-level snowflake.hxx in the install tree).
+# Source tree: the single header lives at include/snowflake.hxx and in-tree consumers
+# include it as <snowflake.hxx>. As a dependency library it installs to
+# <ba7lya/snowflake/snowflake.hxx> (see the install(FILES) below).
 install(TARGETS ${PROJECT_NAME} EXPORT ${PROJECT_NAME}Targets)
 install(FILES include/snowflake.hxx DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/ba7lya/snowflake)
 install(EXPORT ${PROJECT_NAME}Targets

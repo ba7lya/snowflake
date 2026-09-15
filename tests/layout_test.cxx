@@ -3,8 +3,8 @@
 /// @brief ID bit-field layout and decode() correctness
 ///
 
-#include <ba7lya/snowflake/snowflake.hxx>
 #include <gtest/gtest.h>
+#include <snowflake.hxx>
 
 #include "fake_clock.hxx"
 

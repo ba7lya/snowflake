@@ -9,9 +9,9 @@
 /// keeping both algorithms on their hot path during measurement.
 ///
 
-#include <ba7lya/snowflake/snowflake.hxx>
 #include <benchmark/benchmark.h>
 #include <cstdint>
+#include <snowflake.hxx>
 
 using ba7lya::snowflake::algorithm;
 using ba7lya::snowflake::basic_generator;

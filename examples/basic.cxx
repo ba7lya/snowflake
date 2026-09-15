@@ -3,9 +3,9 @@
 /// @brief Generate 10 snowflake ids with default options and print the decoded fields
 ///
 
-#include <ba7lya/snowflake/snowflake.hxx>
 #include <cstdlib>
 #include <iostream>
+#include <snowflake.hxx>
 
 int main() {
     ba7lya::snowflake::generator gen { ba7lya::snowflake::options { .worker_id = 1 } };

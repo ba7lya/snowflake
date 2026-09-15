@@ -4,8 +4,8 @@
 /// for the old implementation's max_seq_num / min_seq_num bugs (B1/B2)
 ///
 
-#include <ba7lya/snowflake/snowflake.hxx>
 #include <gtest/gtest.h>
+#include <snowflake.hxx>
 #include <stdexcept>
 
 #include "fake_clock.hxx"

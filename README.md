@@ -7,6 +7,7 @@
 Snowflake distributed id generator: header-only, C++20, MIT licensed.
 
 ```cpp
+// 作为依赖库引用（安装后路径）；仓库内开发时头文件位于 include/，写 #include <snowflake.hxx>
 #include <ba7lya/snowflake/snowflake.hxx>
 
 ba7lya::snowflake::generator gen {

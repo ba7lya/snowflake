@@ -4,10 +4,10 @@
 /// drift path actually happen
 ///
 
-#include <ba7lya/snowflake/snowflake.hxx>
 #include <cstddef>
 #include <cstdint>
 #include <gtest/gtest.h>
+#include <snowflake.hxx>
 #include <thread>
 #include <unordered_set>
 #include <vector>
