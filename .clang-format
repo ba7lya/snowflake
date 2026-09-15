@@ -144,7 +144,7 @@ KeepEmptyLines:
   AtStartOfFile: false
 LambdaBodyIndentation: Signature
 Language: Cpp
-LineEnding: CRLF
+LineEnding: LF # git stores LF; .gitattributes forces LF checkouts on all platforms
 MacroBlockBegin: ""
 MacroBlockEnd: ""
 # Macros:

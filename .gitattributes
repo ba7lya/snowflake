@@ -1,0 +1,6 @@
+# Normalize line endings: LF in the index and the working tree on all platforms,
+# so clang-format (LineEnding: LF) agrees with git everywhere.
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.ico binary
